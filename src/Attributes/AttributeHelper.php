@@ -20,6 +20,8 @@ class AttributeHelper
         $reflection = Reflector::show($entityClass);
 
         if (false === self::isEntityClass($entityClass)) {
+            // We should probably throw an exception here since we do not expect
+            // to get a object that is not an entity class.
             return null;
         }
 
@@ -105,7 +107,11 @@ class AttributeHelper
                 $inst = $attribute->newInstance();
                 if ($inst instanceof NormColumnMapping) {
                     $property->setAccessible(true);
-                    $columns[$property->getName()] = $property->getValue($entityObject);
+                    $columns[$inst->getFieldName()] = null;
+                    if ($property->isInitialized($entityObject)) {
+                        $columns[$inst->getFieldName()] = $property->getValue($entityObject);
+                    }
+
                     $property->setAccessible(false);
                 }
             }
@@ -136,7 +142,7 @@ class AttributeHelper
 
         foreach ($reflectionClass->getProperties() as $property) {
             $attributes = $property->getAttributes(NormPrimaryKey::class);
-            if(count($attributes)) {
+            if(count($attributes) && $property->isInitialized($entityObject)) {
                 return $property->getValue($entityObject);
             }
         }
