@@ -1,0 +1,44 @@
+{
+  "name": "s-mcdonald/norm",
+  "description": "Norm is a ORM",
+  "keywords": ["ORM"],
+  "homepage": "https://github.com/s-mcdonald/Norm",
+  "license": "MIT",
+  "version": "0.0.6",
+  "authors": [
+    {
+      "name": "Sam McDonald",
+      "email": "s.mcdonald@outlook.com.au",
+      "homepage": "https://github.com/s-mcdonald"
+    }
+  ],
+  "require": {
+    "php": ">=8.2",
+    "ext-pdo": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5",
+    "mockery/mockery": "1.5.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "SamMcDonald\\Norm\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\SamMcDonald\\Norm\\": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "scripts": {
+    "build": [
+      "composer dumpautoload",
+      "composer update",
+      "composer install"
+    ],
+    "tests": [
+      "phpunit -c ./phpunit.xml ./tests"
+    ]
+  }
+}
