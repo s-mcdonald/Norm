@@ -2,9 +2,9 @@ name: Run PHP Tests with MySQL
 
 on:
     push:
-        branches: [ main ]
+        branches: [ develop ]
     pull_request:
-        branches: [ main ]
+        branches: [ develop ]
 
 jobs:
     test:
