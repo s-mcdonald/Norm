@@ -61,9 +61,8 @@ class Connection
         return $this->driver;
     }
 
-    // do some test to ensure pdo still connected
-    public function isConnected(): true
+    public function isConnected(): bool
     {
-        return true;
+        return $this->pdo !== null;
     }
 }

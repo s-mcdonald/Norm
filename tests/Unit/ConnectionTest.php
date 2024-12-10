@@ -12,17 +12,31 @@ class ConnectionTest extends TestCase
 {
     public function testNewConnectionSucceeds(): void
     {
-        $dsn = 'mysql:host=127.0.0.1;port=3306;dbname=testdb;charset=utf8mb4';
-        $config = new Configuration(
-            $dsn,
-            'root',
-            'root'
-        );
-
-        $connection = new Connection($config);
+        $connection = new Connection($this->getValidConfig());
 
         static::assertTrue(
             $connection->isConnected()
+        );
+    }
+
+    public function testConnectionCloseIsNotConnected(): void
+    {
+        $connection = new Connection($this->getValidConfig());
+
+        static::assertTrue($connection->isConnected());
+
+        $connection->close();
+
+        static::assertFalse($connection->isConnected());
+    }
+
+    private function getValidConfig(): Configuration
+    {
+        $dsn = 'mysql:host=127.0.0.1;port=3306;dbname=testdb;charset=utf8mb4';
+        return new Configuration(
+            $dsn,
+            'root',
+            'root'
         );
     }
 }
