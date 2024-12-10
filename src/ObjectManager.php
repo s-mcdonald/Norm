@@ -6,6 +6,10 @@ namespace SamMcDonald\Norm;
 
 use SamMcDonald\Norm\Attributes\AttributeHelper;
 
+/**
+ * Manages objects, cache and all the other things the em doesn't want
+ * to think about. You should not use the OM directly!
+ */
 class ObjectManager
 {
     private array $entities = [];
@@ -15,7 +19,7 @@ class ObjectManager
     // [ id1 => 'changed',... ]
     private array $entityState = [];
 
-    public function flush()
+    public function flush(): void
     {
         foreach ($this->entities as $entity) {
             $this->persist($entity);
@@ -26,9 +30,7 @@ class ObjectManager
 
     protected function identify(object $object): object
     {
-        $objectId = spl_object_id($object);
-
-        return $this->entities[$objectId] ?? $object;
+        return $this->entities[spl_object_id($object)] ?? $object;
     }
 
     protected function removeFromCache(string $entityClass, int $id): void
@@ -43,8 +45,7 @@ class ObjectManager
 
     protected function addEntity(object $object, string $entityClass, int $id): void
     {
-        $uniqueKey = $this->getUniqueKey($entityClass, $id);
-        $this->entities[$uniqueKey] = $object;
+        $this->entities[$this->getUniqueKey($entityClass, $id)] = $object;
     }
 
     protected static function mapToObject(array $data, string $entityClass): object

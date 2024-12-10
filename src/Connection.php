@@ -8,6 +8,12 @@ use PDO;
 use SamMcDonald\Norm\Drivers\MySql\MySql80PlatformDriver;
 use SamMcDonald\Norm\Drivers\PlatformDriver;
 
+/**
+ * The connection serves as an additional abstraction layer, utilizing a
+ * Platform Driver in conjunction with the configuration class.
+ * PDO is used as the primary interface to establish
+ * a connection.
+ */
 class Connection
 {
     private PlatformDriver|null $driver = null;

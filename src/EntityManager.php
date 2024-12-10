@@ -11,6 +11,15 @@ use SamMcDonald\Norm\Checks\PrimaryKeyCheck;
 use SamMcDonald\Norm\Contracts\EntityManagerInterface;
 use SamMcDonald\Norm\Exceptions\NormException;
 
+/**
+ * Class EntityManager
+ *
+ * Manages the lifecycle of entities and serves as the primary interface
+ * for accessing and interacting with the database layer in an application.
+ *
+ * The EntityManager acts as a bridge between the application objects and the database,
+ * fostering abstraction and robustness in data management.
+ */
 class EntityManager extends ObjectManager implements EntityManagerInterface
 {
     private bool $lockedDueToError = false;
@@ -82,6 +91,17 @@ class EntityManager extends ObjectManager implements EntityManagerInterface
         }
 
         return new EntityRepository($this, $entityClass);
+    }
+
+    public function get(string $entityClass, int $id): object|null
+    {
+        $found = $this->find($entityClass, $id);
+
+        if ($found === null) {
+            throw new Exception('Entity not found.');
+        }
+
+        return $found;
     }
 
     /**

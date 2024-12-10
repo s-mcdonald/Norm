@@ -21,7 +21,7 @@ class NormException extends RuntimeException
     public static function createEntityOutOfBounds(string $message = "", int $code = 0, Throwable $previous = null): self
     {
         if ($message === "") {
-            $message = "Entity not found : NormORM Exception";
+            $message = "Entity not found : nORM Exception";
         }
 
         return new self($message, $code, $previous);
