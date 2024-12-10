@@ -56,7 +56,7 @@ You can persist new entities or delete existing ones using the `EntityManager`:
 $entityManager->persist($user);
 
 $userRepo = $entityManager->getRepository(User::class);
-$userRepo->delete($user);
+$userRepo->delete($user->id);
 ```
 
 ## License
