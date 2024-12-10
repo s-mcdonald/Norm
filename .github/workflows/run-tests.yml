@@ -36,6 +36,18 @@ jobs:
             - name: Install dependencies
               run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
 
+            - name: Set up database schema
+              run: |
+                # Wait for MySQL service to be ready
+                sudo apt-get update
+                sudo apt-get install -y mysql-client
+                while ! mysqladmin ping -h127.0.0.1 --silent; do
+                    sleep 1
+                done
+              
+                # Create the table
+                mysql -h 127.0.0.1 -P 3306 -u root -proot testdb < /setup/setup.sql
+
             - name: Run tests
               env:
                   DB_HOST: 127.0.0.1
